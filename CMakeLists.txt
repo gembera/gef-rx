@@ -1,30 +1,37 @@
 cmake_minimum_required(VERSION 3.21)
 project(gef-rx)
 
-include(CheckTypeSize)
-
-aux_source_directory(src DIR_SRC)
-
-add_library(gef-rx STATIC ${DIR_SRC})
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    add_definitions("-DENABLE_MEM_PROFILE")
+    add_definitions("-DENABLE_MEM_RECORD")
+endif()
 
 add_subdirectory(libs/gef-core)
 
-option(ENABLE_MEM_PROFILE "Enable memory profiling" OFF)
-option(ENABLE_MEM_RECORD "Enable memory record" OFF)
 
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-    set(ENABLE_MEM_PROFILE ON)
-    set(ENABLE_MEM_RECORD ON)
-endif()
+add_executable(gef-pub src/simple_publisher.c libs/mqtt-c/mqtt.c libs/mqtt-c/mqtt_pal.c)
 
-target_include_directories(gef-rx PUBLIC 
+target_link_libraries(gef-pub gef-core)
+
+target_include_directories(gef-pub PUBLIC 
     inc 
-    ${CMAKE_CURRENT_BINARY_DIR}/libs/gef-core
-    libs/gef-core/inc
 )
 
-if(PROJECT_IS_TOP_LEVEL AND CMAKE_BUILD_TYPE MATCHES Debug)
-    message(STATUS "${PROJECT_NAME} enables testing.")
-    enable_testing()
-    add_subdirectory(tests)
-endif()
+target_include_directories(gef-pub PRIVATE 
+    libs/gef-core/inc
+    libs/mqtt-c
+)
+
+
+add_executable(gef-sub src/simple_subscriber.c libs/mqtt-c/mqtt.c libs/mqtt-c/mqtt_pal.c)
+
+target_link_libraries(gef-sub gef-core)
+
+target_include_directories(gef-sub PUBLIC 
+    inc 
+)
+
+target_include_directories(gef-sub PRIVATE 
+    libs/gef-core/inc
+    libs/mqtt-c
+)

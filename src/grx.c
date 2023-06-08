@@ -6,11 +6,9 @@
 
 #include "grx.h"
 #include <stdio.h>
-#include <assert.h>
-#include "glib.h"
 
-void g_rx_start(){
-    gint i = 100;
-    //assert(i > 100);
-    printf("Rx Start! i = %d", i);
+int main(int argc, char const *argv[])
+{
+    printf("Hello RC");
+    return 0;
 }

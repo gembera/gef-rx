@@ -6,7 +6,8 @@
 
 #ifndef _G_RX_H_
 #define _G_RX_H_
-
-void g_rx_start();
+#include "gchannel.h"
+#include "gcoroutine.h"
+#include "glib.h"
 
 #endif
