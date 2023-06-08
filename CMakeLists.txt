@@ -8,7 +8,7 @@ endif()
 
 add_subdirectory(libs/gef-core)
 
-add_executable(gef-pub src/simple_publisher.c libs/mqtt-c/mqtt.c libs/mqtt-c/mqtt_pal.c)
+add_executable(gef-pub src/simple_publisher.c src/kbhit.c libs/mqtt-c/mqtt.c libs/mqtt-c/mqtt_pal.c)
 
 IF(WIN32)
     target_link_libraries(gef-pub gef-core ws2_32 wsock32)
@@ -25,7 +25,7 @@ target_include_directories(gef-pub PRIVATE
     libs/mqtt-c
 )
 
-add_executable(gef-sub src/simple_subscriber.c libs/mqtt-c/mqtt.c libs/mqtt-c/mqtt_pal.c)
+add_executable(gef-sub src/simple_subscriber.c src/kbhit.c libs/mqtt-c/mqtt.c libs/mqtt-c/mqtt_pal.c)
 
 IF(WIN32)
     target_link_libraries(gef-sub gef-core ws2_32 wsock32)
