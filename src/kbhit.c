@@ -11,6 +11,7 @@
 #endif /* _WIN32 */
 
 #ifndef _WIN32
+static int setup = 0;
 static struct termios orig_termios;
 
 static void reset_terminal_mode(void) {
@@ -20,6 +21,9 @@ static void reset_terminal_mode(void) {
 
 void setup_terminal_mode(void) {
 #ifndef _WIN32
+  if (setup)
+    return;
+  setup = 1;
   struct termios new_termios;
 
   if (!isatty(STDIN_FILENO))
@@ -50,6 +54,7 @@ int kbhit(void) {
 #ifdef _WIN32
   return _kbhit();
 #else  /* _WIN32 */
+  setup_terminal_mode();
   int oldf, ch;
 
   oldf = fcntl(STDIN_FILENO, F_GETFL, 0);

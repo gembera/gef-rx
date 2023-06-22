@@ -106,12 +106,10 @@ int main(int argc, const char *argv[]) {
 
   /* block */
   // while(fgetc(stdin) != EOF);
-  setup_terminal_mode();
   while (1) {
     if (kbhit()) {
-      int c = getch();
-      printf("key pressed %d", c);
-      if (c == 'q')
+      printf(".");
+      if (getch() == 4)
         break;
     } else {
       sleep(1);
