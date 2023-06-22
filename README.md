@@ -41,4 +41,4 @@ yarn wasm release test
 ```
 
 # Sponsors
-[![Carota](https://www.carota.ai/logo.png)](https://www.carota.ai)
+[![Carota](https://www.carota.ai/logo.png | width=100)](https://www.carota.ai)
